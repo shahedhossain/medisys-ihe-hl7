@@ -15,6 +15,7 @@
 		<version.xbean.spring>3.16</version.xbean.spring>		
 		<maven.war.final.name>ihehl7</maven.war.final.name>
 		<version.activemq.core>5.7.0</version.activemq.core>
+		<version.hapi.osgi.base>1.2</version.hapi.osgi.base>
 		<build.description>development build</build.description>
 		<version.org.apache.camel>2.13.2</version.org.apache.camel>
 		<version.springframework>3.2.8.RELEASE</version.springframework>
@@ -126,6 +127,11 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-hl7</artifactId>
 			<version>${version.org.apache.camel}</version>
+		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi</groupId>
+			<artifactId>hapi-osgi-base</artifactId>
+			<version>${version.hapi.osgi.base}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
