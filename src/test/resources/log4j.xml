@@ -3,7 +3,7 @@
 <log4j:configuration>
 
 	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="${catalina.base}/logs/RDP.ERROR" />
+		<param name="File" value="${catalina.base}/logs/IHEHL7.ERROR" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="'.'ddMMMyyyy'.log'" />
 		<param name="threshold" value="WARN" />
@@ -21,8 +21,8 @@
 				value="%d{MMM dd, yyyy HH:mm:ss a} %c [METHOD: %M , LINE: %L]%n%-5p: %m%n" />
 		</layout>
 	</appender>
-	
-	<category name="com.rdpgroupbd.erp">
+
+	<category name="sa.com.medisys.spring">
 		<priority value="INFO" />
 	</category>
 	
@@ -55,7 +55,7 @@
 	</category>
 
 	<root>
-		<priority value="INFO" />		
+		<priority value="INFO" />
 		<appender-ref ref="file" />
 		<appender-ref ref="console" />
 	</root>
