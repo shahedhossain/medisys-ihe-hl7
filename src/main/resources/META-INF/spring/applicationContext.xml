@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<context:annotation-config />	
+	<context:component-scan	base-package="sa.com.medisys.spring.init" />
+	<context:component-scan base-package="org.apache.camel.spring.issues.contextscan"/>
+	
+	<endpoint id="hl7listener" uri="mina:tcp://localhost:8888?sync=true&amp;codec=#hl7codec"/>
+	<bean id="hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
+        <property name="charset" value="iso-8859-1"/>
+    </bean
+	
+	<!--
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<contextScan/>
+		<route>
+			<from uri="seda:foo"/>
+			<to uri="mock:results"/>
+		</route>
+	</camelContext>	
+	-->
+
+</beans>

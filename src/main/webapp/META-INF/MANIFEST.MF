@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: com.formativesoft.mcserp
+Implementation-Version: 1.0.1.RELEASE
+Build-Jdk: 1.6.0_26
+Built-By: Formative Lab
+Specification-Vendor: Formative Soft Ltd
+Specification-Title: Formative soft MCS ERP WEB
+Created-By: Apache Maven
+Specification-Version: 1.0.1.RELEASE
+url: http://www.formativesoft.com/mcserp-spring-web
+Archiver-Version: Plexus Archiver
