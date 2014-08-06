@@ -21,37 +21,41 @@
 				value="%d{MMM dd, yyyy HH:mm:ss a} %c [METHOD: %M , LINE: %L]%n%-5p: %m%n" />
 		</layout>
 	</appender>
-
-	<category name="sa.com.medisys.spring">
-		<priority value="INFO" />
+	
+	<category name="ca.uhn.hapi">
+		<priority value="DEBUG" />
 	</category>
 	
-	<category name="net.sf.ehcache">
-		<priority value="WARN" />
+	<category name="ca.uhn.hl7v2">
+		<priority value="DEBUG" />
 	</category>
-
-	<category name="org.jboss.seam">
-		<priority value="WARN" />
+	
+	<category name="ca.uhn.hl7v3">
+		<priority value="DEBUG" />
 	</category>
-
-	<category name="org.hibernate">
-		<priority value="WARN" />
-	</category>
-
-	<category name="org.quartz">
-		<priority value="WARN" />
-	</category>
-
-	<category name="org.richfaces">
-		<priority value="WARN" />
-	</category>
-
+	
 	<category name="javax.servlet">
-		<priority value="WARN" />
+		<priority value="DEBUG" />
+	</category>
+	
+	<category name="org.apache.activemq">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="org.apache.camel">
+		<priority value="DEBUG" />
+	</category>
+	
+	<category name="org.apache.mina">
+		<priority value="DEBUG" />
 	</category>
 
 	<category name="org.springframework">
-		<priority value="WARN" />
+		<priority value="DEBUG" />
+	</category>
+	
+	<category name="sa.com.medisys.spring">
+		<priority value="INFO" />
 	</category>
 
 	<root>
