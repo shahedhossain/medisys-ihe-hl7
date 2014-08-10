@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<routeContext id="myCoolRoutes" xmlns="http://camel.apache.org/schema/spring">
+		<route id="FileToJMS">
+			<from uri="file:target/placeorder"/>
+			<to uri="jms:incomingOrders"/>
+		</route>
+		<route id="HTTPtoJMS">
+			<from uri="jetty:http://0.0.0.0:8888/placeorder"/>
+			<inOnly uri="jms:incomingOrders"/>
+			<transform>
+				<constant>OK</constant>
+			</transform>
+		</route>
+		<route id="NormalizeMessageData">
+			<from uri="jms:incomingOrders"/>
+			<convertBodyTo type="java.lang.String"/>
+			<choice>
+				<when>
+					<simple>${body} contains '?xml'</simple>
+					<unmarshal>                    
+						<jaxb contextPath="org.fusesource.camel"/>
+					</unmarshal>
+					<to uri="jms:orders"/>
+				</when>
+				<otherwise>
+					<unmarshal>                    
+						<bindy packages="org.fusesource.camel" type="Csv"/>
+					</unmarshal>
+					<to uri="jms:orders"/>
+				</otherwise>
+			</choice>
+		</route>
+		
+		<route id="mina1">
+			<from uri="mina:tcp://localhost:9991"/>
+			<setHeader headerName="minaServer">
+				<constant>localhost:9991</constant>
+			</setHeader>
+		</route>
+		
+		<!--
+		<route id="helloRoute">
+			<from uri="servlet:///hello"/>
+			<choice>
+				<when>
+					<header>name</header>
+					<transform>
+						<simple>Hello ${header.name} how are you?</simple>
+					</transform>
+				</when>
+				<otherwise>
+					<transform>
+						<constant>Add a name parameter to uri, eg ?name=foo</constant>
+					</transform>
+				</otherwise>
+			</choice>
+		</route>
+		-->
+		
+		<route>
+			<from uri="seda:foo"/>
+			<to uri="mock:results"/>
+		</route>
+			
+	</routeContext>
+
+</beans>

@@ -11,38 +11,7 @@
   <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="jms">
     <property name="brokerURL" value="vm://localhost"/>
   </bean>
-
-  <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <route id="FileToJMS">
-        <from uri="file:target/placeorder"/>
-        <to uri="jms:incomingOrders"/>
-    </route>
-    <route id="HTTPtoJMS">
-        <from uri="jetty:http://0.0.0.0:8888/placeorder"/>
-        <inOnly uri="jms:incomingOrders"/>
-        <transform>
-            <constant>OK</constant>
-        </transform>
-    </route>
-    <route id="NormalizeMessageData">
-        <from uri="jms:incomingOrders"/>
-        <convertBodyTo type="java.lang.String"/>
-        <choice>
-            <when>
-                <simple>${body} contains '?xml'</simple>
-                <unmarshal>                    
-                    <jaxb contextPath="org.fusesource.camel"/>
-                </unmarshal>
-                <to uri="jms:orders"/>
-            </when>
-            <otherwise>
-                <unmarshal>                    
-                    <bindy packages="org.fusesource.camel" type="Csv"/>
-                </unmarshal>
-                <to uri="jms:orders"/>
-            </otherwise>
-        </choice>
-    </route>
-  </camelContext>
+  
+  <import resource="classpath:/META-INF/camel/apacheCamelContext.xml"/>
 
 </beans>

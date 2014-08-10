@@ -5,13 +5,11 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
 		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+		
+	<import resource="classpath:/META-INF/camel/apacheRouteContext.xml"/>
 
-  <amq:broker brokerName="localhost" persistent="false" useJmx="false"/>
-
-  <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="jms">
-    <property name="brokerURL" value="vm://localhost"/>
-  </bean>
-  
-  <import resource="classpath:/META-INF/camel/apacheCamelContext.xml"/>
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<routeContextRef ref="myCoolRoutes"/>
+	</camelContext>
 
 </beans>
