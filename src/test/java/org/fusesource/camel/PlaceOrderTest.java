@@ -16,8 +16,9 @@
  */
 package org.fusesource.camel;
 
-import java.io.File;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import org.apache.activemq.util.IOHelper;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.CamelContext;
@@ -46,6 +47,8 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(locations="classpath:/META-INF/spring/applicationContext.xml")
 public class PlaceOrderTest {
 
+	private static final Logger log = LoggerFactory.getLogger(PlaceOrderTest.class);
+
 	@Autowired
     protected CamelContext camelContext;
  
@@ -55,6 +58,12 @@ public class PlaceOrderTest {
 	@Before
     public void setUp() throws Exception {
         //TODO
+    }
+	
+	@Test
+    public void testQuery() throws Exception {
+		log.info("Hello world");
+    	assertTrue(true);
     }
 
 	@Test
