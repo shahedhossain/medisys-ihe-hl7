@@ -7,6 +7,7 @@
 		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd">
 
 	<routeContext id="myCoolRoutes" xmlns="http://camel.apache.org/schema/spring">
+		<!--
 		<route id="FileToJMS">
 			<from uri="file:target/placeorder"/>
 			<to uri="jms:incomingOrders"/>
@@ -37,6 +38,7 @@
 				</otherwise>
 			</choice>
 		</route>
+		-->
 		
 		<route id="mina1">
 			<from uri="mina:tcp://localhost:9991"/>
@@ -45,8 +47,6 @@
 			</setHeader>
 		</route>
 		
-		<!--
-		-->
 		<route id="helloRoute">
 			<from uri="servlet:///hello"/>
 			<choice>
