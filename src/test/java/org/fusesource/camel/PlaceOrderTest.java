@@ -20,55 +20,47 @@ import java.io.File;
 
 import org.apache.activemq.util.IOHelper;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.CamelContext;
+import org.apache.camel.EndpointInject;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelSpringJUnit4ClassRunner;
+import org.apache.camel.test.spring.DisableJmx;
+import org.apache.camel.test.spring.MockEndpoints;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.support.AbstractXmlApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.web.WebAppConfiguration;
 
-public class PlaceOrderTest extends CamelSpringTestSupport {
+@DisableJmx(false)
+@MockEndpoints("log:*")
+//@WebAppConfiguration("webapp")
+@RunWith(CamelSpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@ContextConfiguration(locations="classpath:/META-INF/spring/applicationContext.xml")
+public class PlaceOrderTest {
 
-    @Test
-    public void testPlacingOrders() throws Exception {
-        // Try placing two file orders
-        MockEndpoint result = getMockEndpoint("mock:orders");
-        result.reset();
-        result.expectedMessageCount(2);
-        
-        // clear out any old orders
-        deleteDirectory("target/placeorder");
-        IOHelper.mkdirs(new File("target/placeorder"));      
-        
-        // place 2 file based orders
-        IOHelper.copyFile(new File("src/data/message1.xml"), new File("target/placeorder/message1.xml"));
-        IOHelper.copyFile(new File("src/data/message2.csv"), new File("target/placeorder/message2.csv"));
-        
-        result.assertIsSatisfied();
-
-        // Now try placing an order via HTTP       
-        result.reset();
-        result.expectedMessageCount(1);
-        result.expectedBodiesReceived(new Order("gearbox", 5));
-        
-        String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" 
-            + "<order name=\"gearbox\" amount=\"5\"/>";
-        Object response = template.requestBody("http://localhost:8888/placeorder", body);
-        // convert the response to a String
-        String responseString = context.getTypeConverter().convertTo(String.class, response);
-        assertEquals("OK", responseString);
-        
-        // ensure that the order got through to the mock endpoint
-        result.assertIsSatisfied();
-    }       
-
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new OrderRouterExtension();
+	@Autowired
+    protected CamelContext camelContext;
+ 
+    @EndpointInject(uri = "mock:foo")
+    protected MockEndpoint foo;
+	
+	@Before
+    public void setUp() throws Exception {
+        //TODO
     }
-    
-    @Override
-    protected AbstractXmlApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/applicationContext.xml");
+
+	@Test
+    public void testMocksAreValid() throws Exception {
+        foo.message(0).header("bar").isEqualTo("ABC"); 
+        MockEndpoint.assertIsSatisfied(camelContext);
     }
 }
 

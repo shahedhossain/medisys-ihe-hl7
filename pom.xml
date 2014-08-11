@@ -14,7 +14,7 @@
 		<version.junit>4.9</version.junit>
 		<context.root>/ihehl7</context.root>
 		<version.slf4j>1.6.6</version.slf4j>		
-		<version.log4j>1.2.16</version.log4j>
+		<version.log4j>1.2.17</version.log4j>
 		<version.ca.uhn.hapi>1.2</version.ca.uhn.hapi>
 		<version.xbean.spring>3.16</version.xbean.spring>		
 		<maven.war.final.name>ihehl7</maven.war.final.name>
@@ -25,7 +25,7 @@
 		<version.commons.codec>1.4</version.commons.codec>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.maven.compiler.plugin>2.5.1</version.maven.compiler.plugin>
-		<version.org.apache.camel>2.9.0.fuse-70-097</version.org.apache.camel>
+		<version.org.apache.camel>2.10.0.fuse-71-047</version.org.apache.camel>
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 	</properties>
 	
@@ -142,7 +142,7 @@
 		<!-- logger stop -->
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-test</artifactId>      
+			<artifactId>camel-testng</artifactId>      
 			<version>${version.org.apache.camel}</version>
 			<scope>test</scope>      
 		</dependency>
